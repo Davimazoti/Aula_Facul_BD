@@ -227,7 +227,8 @@ values ('40:00:00', 2, 1);
 	select * from funcionario order by cidade asc, salario desc;
     
 -- 17
-	select f.nome, f.salario from funcionario f where salario >= 1000 and salario <= 2000;
+	select f.nome, f.salario from funcionario f 
+		where salario >= 1000 and salario <= 2000;
     
 -- 18
 	select * from funcionario f where f.cidade like '%ar%';
@@ -238,4 +239,48 @@ values ('40:00:00', 2, 1);
 -- 20
 	select min(salario) as menorSalario from funcionario;
 
-			
+-- 21
+	select avg(salario) as MediaSalario from funcionario;
+    
+-- 22
+	select f.nome, f.salario from funcionario f;
+    
+-- 23
+	select count(f.numero) from funcionario f
+		where f.salario > 1500;
+
+-- 24
+	select f.nome, f.cidade from funcionario f
+		where f.cidade like "São%";
+        
+-- 25
+	select count(f.numero) as FuncRecebeMais from funcionario f
+		where f.salario > (select avg(f.salario) from funcionario f);
+
+-- 26
+	select f.nome from funcionario f
+		where numeroSupervisor is null;
+        
+-- 27
+	select f.nome, f.numeroSupervisor from funcionario f
+		where numeroSupervisor is not null;
+	
+-- 28
+	select f.nome, fs.nome as nomeSupervisor from funcionario f, funcionario fs
+		where fs.numero = f.numeroSupervisor;
+
+-- 29
+	select f.nome, fp.hora from funcionario f, funcionarioprojeto fp
+		where f.numero = fp.numeroFunc and fp.hora = (select max(hora) from funcionarioprojeto); 
+        
+-- 30
+	select f.nome, p.nome as nomeProjeto from funcionario f, projeto p, funcionarioprojeto fp
+		where f.numero = fp.numerofunc and p.numero = fp.numeroproj;
+
+-- 31
+	select f.nome, p.nome as nomeProjeto from funcionario f, projeto p, funcionarioprojeto fp
+		where f.numero = fp.numerofunc and fp.numeroproj is null;
+
+-- 32
+	select f.nome, fp.hora from funcionario f, funcionarioprojeto fp
+		where f.numero = fp.numeroFunc and fp.hora > (select avg(hora) from funcionarioprojeto); 
