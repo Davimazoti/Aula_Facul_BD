@@ -109,6 +109,35 @@ values (4, 40, 'Vendas', '2024-01-02');
 insert into Departamento (numeroFuncGer, numero, nome, dataIniGer)
 values (1, 50, 'Marketing', '2023-06-15');
 
+UPDATE funcionario SET numerodepto = 10
+where numero = 1;
+
+UPDATE funcionario SET numerodepto = 30
+where numero = 2;
+
+UPDATE funcionario SET numerodepto = 20
+where numero = 3;
+
+UPDATE funcionario SET numerodepto = 50
+where numero = 4;
+
+UPDATE funcionario SET numerodepto = 40
+where numero = 5;
+
+UPDATE funcionario SET numerodepto = 20
+where numero = 6;
+
+UPDATE funcionario SET numerodepto = 20
+where numero = 7;
+
+UPDATE funcionario SET numerodepto = 10
+where numero = 8;
+
+UPDATE funcionario SET numerodepto = 40
+where numero = 9;
+
+UPDATE funcionario SET numerodepto = 50
+where numero = 10;
 
 insert into Dependente (parentesco, nome, dataNasc, numeroFunc)
 values ('Filha', 'Clara Alberto', '2015-05-12', 1);
@@ -284,3 +313,18 @@ values ('40:00:00', 2, 1);
 -- 32
 	select f.nome, fp.hora from funcionario f, funcionarioprojeto fp
 		where f.numero = fp.numeroFunc and fp.hora > (select avg(hora) from funcionarioprojeto); 
+
+
+
+-- ----------------------------------------------------------
+-- JOIN
+-- ----------------------------------------------------------
+
+-- 1.
+select f.nome as Funcionario, d.nome as departamento from funcionario f inner join departamento d on f.numerodepto = d.numero order by f.nome asc;
+
+-- 2.
+select f.nome as Funcionario, f.salario, d.nome as Departamento from funcionario f inner join departamento d on d.numero = f.numerodepto and d.nome like "Recursos Humanos";
+
+-- 3.
+select f.numero, f.nome as Funcionario, 
