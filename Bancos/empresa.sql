@@ -327,4 +327,68 @@ select f.nome as Funcionario, d.nome as departamento from funcionario f inner jo
 select f.nome as Funcionario, f.salario, d.nome as Departamento from funcionario f inner join departamento d on d.numero = f.numerodepto and d.nome like "Recursos Humanos";
 
 -- 3.
-select f.numero, f.nome as Funcionario, 
+select f.numero, f.nome from funcionario f left join departamento d on f.numerodepto = d.numero where f.numerodepto is null;
+
+-- 4.
+select d.nome as Departamento, f.nome as Funcionario from departamento d left join funcionario f on f.numerodepto = d.numero order by d.nome asc; 
+
+-- 5.
+select f.nome as Funcionario, d.nome as Departamento from departamento d right join funcionario f on f.numerodepto = d.numero order by f.nome asc; 
+
+-- 6.
+select f.nome as Funcionario, d.nome as Dependente, d.parentesco from funcionario f inner join dependente d on f.numero = d.numerofunc order by f.nome asc;
+
+-- 7.
+select f.numero, f.nome from funcionario f left join dependente d on f.numero = d.numeroFunc where d.numerofunc is null;
+
+-- 8.
+select f.nome as Funcionario, p.nome as Projeto, fp.hora from funcionarioprojeto fp,funcionario f inner join projeto p where f.numero = fp.numeroFunc and p.numero = fp.numeroProj;
+
+-- 9.
+select f.numero, f.nome from funcionario f left join funcionarioprojeto fp on f.numero = fp.numeroFunc where fp.numeroproj is null;
+
+-- 10.
+select p.nome as Projeto, d.nome as Departamento from projeto p inner join departamento d on p.numerodepto = d.numero;
+
+-- 11.
+select d.nome as Departamento, ld.localizacao as Locall from departamento d inner join localdep ld on d.numero = ld.numerodepto;  
+
+-- 12.
+select d.nome as Departamento, count(f.numero) as Qtd_Funcionario from departamento d left join funcionario f on f.numerodepto = d.numero group by d.nome;
+
+-- 13.
+select * from funcionario f inner join departamento d on f.numerodepto = d.numero;
+select * from departamento d left join funcionario f on f.numerodepto = d.numero;
+select * from funcionario f right join departamento d on f.numerodepto = d.numero;
+
+-- 14.
+select f1.nome as Supervisor, f2.nome as Funcionario from funcionario f2 inner join funcionario f1 on f1.numero = f2.numeroSupervisor;
+
+-- 15.
+select f.nome as Funcionario, d.nome as Departamento, ld.localizacao, f.salario, f1.nome
+	from 
+    funcionario f1 right join funcionario f on f1.numero = f.numeroSupervisor
+    left join departamento d on f.numerodepto = d.numero 
+    inner join localdep ld on d.numero = ld.numerodepto order by f.nome; 
+    
+-- 16.
+select p.nome as Projeto, sec_to_time(sum(time_to_sec(fp.hora))) as totalHora
+	from projeto p inner join funcionarioprojeto fp on p.numero = fp.numeroproj group by p.nome;
+    
+-- 17.
+select p.numero, p.nome from projeto p left join funcionarioprojeto fp on p.numero = fp.numeroProj where fp.numeroFunc is null;
+
+-- 18.
+select f.nome as funcionario, d.nome as dependente, p.nome as projeto, fp.hora
+	from funcionario f inner join dependente d on f.numero = d.numerofunc
+		inner join funcionarioprojeto fp on f.numero = fp.numeroFunc
+		inner join projeto p on p.numero = fp.numeroproj;
+        
+-- 19.
+select d.nome as departamento, ld.localizacao, p.nome as projeto from
+	departamento d inner join localdep ld on d.numero = ld.numerodepto
+    left join projeto p on p.numeroDepto = d.numero;
+    
+-- 20.
+select f.nome as Funcionario, p.nome as projeto from
+	funcionario f cross join projeto p;
